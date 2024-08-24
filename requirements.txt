@@ -3,3 +3,5 @@ Jinja2==2.7.2
 MarkupSafe==0.23
 Werkzeug==0.9.4
 itsdangerous==0.24
+pytest==6.2.4
+pytest-flask==1.2.0
