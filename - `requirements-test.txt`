@@ -1,0 +1,14 @@
+```
+# requirements-test.txt
+
+# Testing framework
+pytest
+
+# Flask testing utilities
+Flask-Testing
+
+# Additional utilities for better testing
+pytest-cov  # For coverage report
+pytest-mock  # For mocking in tests
+requests    # For making HTTP requests in tests
+```
