@@ -12,5 +12,13 @@ class HelloWorldTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data, b'Hello, World!')
 
+    def test_meteo_tataouine(self):
+        response = self.client.get('/meteo/tataouine')
+        self.assertEqual(response.status_code, 200)
+        # Assuming the expected response is a JSON object
+        self.assertIn('temperature', response.json)
+        self.assertIn('humidity', response.json)
+        self.assertIn('description', response.json)
+
 if __name__ == '__main__':
     unittest.main()
