@@ -1,38 +1,45 @@
-from flask import Flask, request, jsonify
-from datetime import datetime
-import requests
+# Prayer Times API
 
-app = Flask(__name__)
+## Project Description
+The Prayer Times API is a Flask-based web service designed to provide users with accurate daily prayer times based on their geographical location. The main goals of this project are to facilitate easy access to prayer times for Muslims around the world and to serve as a foundation for further enhancements related to Islamic practices.
 
-@app.route('/api/prayer-times', methods=['GET'])
-def prayer_times():
-    location = request.args.get('location')
-    date = request.args.get('date', datetime.now().strftime('%Y-%m-%d'))
+### Key Features
+- **Dynamic Prayer Time Retrieval**: Get prayer times based on a specified location and date.
+- **JSON Response**: Receive data in a structured JSON format for easy integration into applications.
+- **Date Flexibility**: Support for retrieving prayer times for any specified date.
 
-    # Replace with actual logic to retrieve prayer times
-    # For demonstration, we use a dummy response
-    prayer_times_data = {
-        'location': location,
-        'date': date,
-        'fajr': '05:00',
-        'dhuhr': '12:00',
-        'asr': '15:00',
-        'maghrib': '18:00',
-        'isha': '19:30'
-    }
+### Target Audience
+This project is aimed at developers building applications or services for the Muslim community that requires access to prayer times, as well as individuals interested in integrating prayer time features into their own applications.
 
-    return jsonify(prayer_times_data)
+### Prerequisites
+- Python 3.x
+- Flask
+- Requests library (if further extensions are planned)
 
-@app.route('/api/news-headlines', methods=['GET'])
-def news_headlines():
-    country = request.args.get('country')
-    api_key = 'YOUR_NEWS_API_KEY'  # Replace with your News API key
-    url = f'https://newsapi.org/v2/top-headlines?country={country}&apiKey={api_key}'
-    
-    response = requests.get(url)
-    headlines_data = response.json()
+## Installation Instructions
+To install the necessary dependencies and run the project, follow these steps:
 
-    return jsonify(headlines_data)
+1. Clone the repository:
+   git clone https://github.com/yourusername/prayer-times-api.git
+   cd prayer-times-api
 
-if __name__ == '__main__':
-    app.run(debug=True)
+2. Create a virtual environment (optional but recommended):
+   python -m venv venv
+   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+
+3. Install dependencies:
+   pip install Flask requests
+
+## Usage Examples
+To start the API, run the following command in your terminal:
+python app.py
+Once the server is running, you can access the prayer times by sending a GET request to the following endpoint:
+http://127.0.0.1:5000/api/prayer-times?location=YourLocation&date=YYYY-MM-DD
+For example:
+http://127.0.0.1:5000/api/prayer-times?location=NewYork&date=2023-10-01
+
+## Contribution Guidelines
+If you'd like to contribute to this project, please fork the repository and submit a pull request with your changes. Ensure that your code adheres to the project's coding standards and is well-documented.
+
+## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
