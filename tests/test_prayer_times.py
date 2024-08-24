@@ -34,5 +34,20 @@ class TestPrayerTimesEndpoint(unittest.TestCase):
         response = self.client.get('/api/prayer-times?location=Mecca&date=2023-10-01')
         self.assertEqual(response.status_code, 200)
 
+    def test_get_news_headlines_valid_country(self):
+        response = self.client.get('/api/news-headlines?country=SaudiArabia')
+        self.assertEqual(response.status_code, 200)
+        self.assertIsInstance(response.json.get('headlines'), list)
+
+    def test_get_news_headlines_invalid_country(self):
+        response = self.client.get('/api/news-headlines?country=InvalidCountry')
+        self.assertEqual(response.status_code, 404)
+        self.assertIn('error', response.json)
+
+    def test_get_news_headlines_missing_parameters(self):
+        response = self.client.get('/api/news-headlines')
+        self.assertEqual(response.status_code, 400)
+        self.assertIn('error', response.json)
+
 if __name__ == '__main__':
     unittest.main()
