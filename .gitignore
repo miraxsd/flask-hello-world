@@ -8,7 +8,6 @@ Session.vim
 .netrwhist
 *~
 
-
 ### Python ###
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -44,6 +43,7 @@ htmlcov/
 .cache
 nosetests.xml
 coverage.xml
+tests/  # Add this line to ignore the unit test folder
 
 # Translations
 *.mo
@@ -54,4 +54,3 @@ coverage.xml
 
 # Sphinx documentation
 docs/_build/
-
