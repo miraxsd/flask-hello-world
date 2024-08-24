@@ -1,5 +1,7 @@
 from flask import Flask, jsonify, request
 import requests
+from datetime import datetime
+import pytz
 
 app = Flask(__name__)
 
@@ -11,44 +13,50 @@ def hello_world():
 def what_do_you_need():
     return "I need your instructions to complete the task!"
 
-@app.route('/meteo/<city>')
-def get_meteo(city):
+@app.route('/meteo/tataouine')
+def get_meteo_tataouine():
     # Replace 'YOUR_API_KEY' with your actual API key
     api_key = 'YOUR_API_KEY'
-    weather_url = f'http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric'
+    url = f'http://api.openweathermap.org/data/2.5/weather?q=Tataouine&appid={api_key}&units=metric'
     
-    weather_response = requests.get(weather_url)
-    weather_data = weather_response.json()
+    response = requests.get(url)
+    data = response.json()
     
-    if weather_response.status_code == 200:
+    if response.status_code == 200:
         meteo_info = {
-            'city': city,
-            'temperature': weather_data['main']['temp'],
-            'description': weather_data['weather'][0]['description'],
-            'humidity': weather_data['main']['humidity'],
-            'wind_speed': weather_data['wind']['speed']
+            'temperature': data['main']['temp'],
+            'description': data['weather'][0]['description'],
+            'humidity': data['main']['humidity'],
+            'wind_speed': data['wind']['speed']
         }
+        return jsonify(meteo_info), 200
     else:
         return jsonify({'error': 'City not found or API error'}), 404
 
-    # Fetch prayer times
-    prayer_url = f'http://api.aladhan.com/v1/timingsByCity?city={city}&country=your_country'  # Replace 'your_country' with appropriate country
-    prayer_response = requests.get(prayer_url)
-    prayer_data = prayer_response.json()
+@app.route('/api/prayer-times', methods=['GET'])
+def get_prayer_times():
+    location = request.args.get('location')
+    date = request.args.get('date')
     
-    if prayer_response.status_code == 200:
-        prayer_times = {
-            'fajr': prayer_data['data']['timings']['Fajr'],
-            'dhuhr': prayer_data['data']['timings']['Dhuhr'],
-            'asr': prayer_data['data']['timings']['Asr'],
-            'maghrib': prayer_data['data']['timings']['Maghrib'],
-            'isha': prayer_data['data']['timings']['Isha']
-        }
-    else:
-        prayer_times = {'error': 'Could not fetch prayer times'}
-
-    meteo_info['prayer_times'] = prayer_times
-    return jsonify(meteo_info), 200
+    if not location:
+        return jsonify({'error': 'Location parameter is required'}), 400
+    
+    # Dummy data for prayer times, replace with your actual calculation or API call
+    prayer_times_data = {
+        'Fajr': '05:00',
+        'Dhuhr': '12:00',
+        'Asr': '15:30',
+        'Maghrib': '18:00',
+        'Isha': '19:30'
+    }
+    
+    # Here you would implement the logic to calculate or fetch actual prayer times based on the location and date
+    
+    return jsonify({
+        'location': location,
+        'date': date or datetime.now(pytz.timezone('UTC')).date().isoformat(),
+        'prayer_times': prayer_times_data
+    }), 200
 
 if __name__ == '__main__':
     app.run(debug=True, threaded=True)
