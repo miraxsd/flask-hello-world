@@ -28,5 +28,12 @@ class WeatherTestCase(unittest.TestCase):
         self.assertIn('maghrib', response.json)
         self.assertIn('isha', response.json)
 
+    def test_news_headlines_country(self):
+        country = 'your_country'  # Replace with the specific country
+        response = self.client.get(f'/news/headlines/{country}')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('headlines', response.json)
+        self.assertIsInstance(response.json['headlines'], list)
+
 if __name__ == '__main__':
     unittest.main()
