@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  web:
+    image: myapp-web:latest
+    build:
+      context: ./web
+    ports:
+      - "80:80"
+    environment:
+      - DATABASE_URL=mysql://user:password@db:3306/mydatabase
+      - REDIS_URL=redis://cache:6379
+    depends_on:
+      - db
+      - cache
+
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: mydatabase
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    volumes:
+      - db_data:/var/lib/mysql
+
+  cache:
+    image: redis:alpine
+    restart: always
+
+  worker:
+    image: myapp-worker:latest
+    build:
+      context: ./worker
+    depends_on:
+      - db
+      - cache
+
+volumes:
+  db_data:
