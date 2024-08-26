@@ -7,6 +7,8 @@ The Prayer Times API is a Flask-based web service designed to provide users with
 - **Dynamic Prayer Time Retrieval**: Get prayer times based on a specified location and date.
 - **JSON Response**: Receive data in a structured JSON format for easy integration into applications.
 - **Date Flexibility**: Support for retrieving prayer times for any specified date.
+- **Multi-Tenancy Support**: Enable multiple users to access their own prayer times and settings.
+- **User Authentication**: Secure access to the API with user accounts and tokens.
 
 ### Target Audience
 This project is aimed at developers building applications or services for the Muslim community that requires access to prayer times, as well as individuals interested in integrating prayer time features into their own applications.
@@ -14,6 +16,8 @@ This project is aimed at developers building applications or services for the Mu
 ### Prerequisites
 - Python 3.x
 - Flask
+- Flask-SQLAlchemy
+- Flask-JWT-Extended
 - Requests library (if further extensions are planned)
 
 ## Installation Instructions
@@ -28,7 +32,7 @@ To install the necessary dependencies and run the project, follow these steps:
    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
 
 3. Install dependencies:
-   pip install Flask requests
+   pip install Flask Flask-SQLAlchemy Flask-JWT-Extended requests
 
 ## Usage Examples
 To start the API, run the following command in your terminal:
@@ -37,6 +41,15 @@ Once the server is running, you can access the prayer times by sending a GET req
 http://127.0.0.1:5000/api/prayer-times?location=YourLocation&date=YYYY-MM-DD
 For example:
 http://127.0.0.1:5000/api/prayer-times?location=NewYork&date=2023-10-01
+
+### User Authentication
+Register a new user by sending a POST request to:
+http://127.0.0.1:5000/api/register
+
+Login to obtain a JWT token by sending a POST request to:
+http://127.0.0.1:5000/api/login
+
+Use the token to access protected endpoints.
 
 ## Contribution Guidelines
 If you'd like to contribute to this project, please fork the repository and submit a pull request with your changes. Ensure that your code adheres to the project's coding standards and is well-documented.
