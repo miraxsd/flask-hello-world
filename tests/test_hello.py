@@ -34,6 +34,12 @@ class WeatherTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn('headlines', response.json)
         self.assertIsInstance(response.json['headlines'], list)
+        
+    def test_most_viral_films(self):
+        response = self.client.get('/films/viral')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('viral_films', response.json)
+        self.assertIsInstance(response.json['viral_films'], list)
 
 if __name__ == '__main__':
     unittest.main()
