@@ -5,3 +5,4 @@ Werkzeug==2.0.2
 itsdangerous==2.0.1
 requests==2.26.0
 pytz==2021.3
+Flask-Cors==3.0.10
