@@ -2,8 +2,10 @@ from flask import Flask, jsonify, request
 import requests
 from datetime import datetime
 import pytz
+from flask_cors import CORS  # Import CORS
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
 @app.route('/')
 def hello_world():
