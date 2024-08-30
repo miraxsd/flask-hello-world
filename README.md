@@ -15,6 +15,7 @@ This project is aimed at developers building applications or services for the Mu
 - Python 3.x
 - Flask
 - Requests library (if further extensions are planned)
+- Node.js and npm (for the React client)
 
 ## Installation Instructions
 To install the necessary dependencies and run the project, follow these steps:
@@ -27,13 +28,21 @@ To install the necessary dependencies and run the project, follow these steps:
    python -m venv venv
    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
 
-3. Install dependencies:
+3. Install Python dependencies:
    pip install Flask requests
+
+4. Navigate to the client directory and install React dependencies:
+   cd client
+   npm install
 
 ## Usage Examples
 To start the API, run the following command in your terminal:
 python app.py
-Once the server is running, you can access the prayer times by sending a GET request to the following endpoint:
+
+To start the React client, open another terminal and navigate to the client directory, then run:
+npm start
+
+Once both the server and client are running, you can access the prayer times by sending a GET request to the following endpoint:
 http://127.0.0.1:5000/api/prayer-times?location=YourLocation&date=YYYY-MM-DD
 For example:
 http://127.0.0.1:5000/api/prayer-times?location=NewYork&date=2023-10-01
@@ -43,3 +52,14 @@ If you'd like to contribute to this project, please fork the repository and subm
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## React Client
+The React client is located in the `client` directory. It provides a user interface to interact with the Prayer Times API. To build and run the client, follow these steps:
+
+1. Navigate to the `client` directory:
+   cd client
+
+2. Run the following command to start the development server:
+   npm start
+
+The client will be available at `http://localhost:3000` and will allow users to input their location and date to retrieve prayer times easily.
