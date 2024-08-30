@@ -35,5 +35,10 @@ class WeatherTestCase(unittest.TestCase):
         self.assertIn('headlines', response.json)
         self.assertIsInstance(response.json['headlines'], list)
 
+    def test_react_client_interaction(self):
+        response = self.client.get('/react')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('React client is running', response.data.decode())
+
 if __name__ == '__main__':
     unittest.main()
