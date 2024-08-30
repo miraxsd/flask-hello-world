@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React Client</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/react/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/react-scripts/scripts/start.js"></script>
+    <script>
+        const { useState, useEffect } = React;
+
+        function App() {
+            const [data, setData] = useState(null);
+
+            useEffect(() => {
+                axios.get('http://localhost:5000/api/data') // Adjust the URL to your Flask endpoint
+                    .then(response => {
+                        setData(response.data);
+                    })
+                    .catch(error => {
+                        console.error("There was an error fetching the data!", error);
+                    });
+            }, []);
+
+            return (
+                <div>
+                    <h1>React Client for Flask Server</h1>
+                    {data ? (
+                        <pre>{JSON.stringify(data, null, 2)}</pre>
+                    ) : (
+                        <p>Loading...</p>
+                    )}
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>
