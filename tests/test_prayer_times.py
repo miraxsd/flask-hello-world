@@ -1,5 +1,6 @@
 import unittest
 from app import create_app
+import requests
 
 class TestPrayerTimesEndpoint(unittest.TestCase):
     def setUp(self):
@@ -48,6 +49,18 @@ class TestPrayerTimesEndpoint(unittest.TestCase):
         response = self.client.get('/api/news-headlines')
         self.assertEqual(response.status_code, 400)
         self.assertIn('error', response.json)
+
+    def test_react_client_interaction(self):
+        # Sample interaction with the React client
+        url = 'http://localhost:3000/api/prayer-times'
+        params = {'location': 'Mecca', 'date': '2023-10-01'}
+        response = requests.get(url, params=params)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('fajr', response.json())
+        self.assertIn('dhuhr', response.json())
+        self.assertIn('asr', response.json())
+        self.assertIn('maghrib', response.json())
+        self.assertIn('isha', response.json())
 
 if __name__ == '__main__':
     unittest.main()
