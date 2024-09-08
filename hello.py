@@ -68,5 +68,29 @@ def get_news_headlines(country):
     else:
         return jsonify({'error': 'Country not found or API error'}), 404
 
+@app.route('/api/crime/<country>/<int:year>', methods=['GET'])
+def get_crime_numbers(country, year):
+    # Placeholder for crime data retrieval logic
+    # In a real application, you would connect to a database or an external API to get the crime data
+    crime_data = {
+        'USA': {
+            2020: 15000,
+            2021: 16000,
+            2022: 15500
+        },
+        'UK': {
+            2020: 5000,
+            2021: 5500,
+            2022: 5300
+        }
+    }
+    
+    country_data = crime_data.get(country)
+    
+    if country_data and year in country_data:
+        return jsonify({'country': country, 'year': year, 'crime_number': country_data[year]}), 200
+    else:
+        return jsonify({'error': 'Data not found for the specified country and year'}), 404
+
 if __name__ == '__main__':
     app.run(debug=True, threaded=True)
