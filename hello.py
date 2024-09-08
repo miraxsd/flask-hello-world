@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 import requests
 from datetime import datetime
 import pytz
+import random
 
 app = Flask(__name__)
 
@@ -67,6 +68,11 @@ def get_news_headlines(country):
         return jsonify({'headlines': headlines}), 200
     else:
         return jsonify({'error': 'Country not found or API error'}), 404
+
+@app.route('/random', methods=['GET'])
+def random_number():
+    number = random.randint(5, 10)
+    return jsonify({'random_number': number}), 200
 
 if __name__ == '__main__':
     app.run(debug=True, threaded=True)
