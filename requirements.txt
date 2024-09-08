@@ -1,7 +1,12 @@
-Flask==2.0.2
-Jinja2==3.0.1
-MarkupSafe==2.0.1
-Werkzeug==2.0.2
-itsdangerous==2.0.1
-requests==2.26.0
-pytz==2021.3
+from flask import Flask, jsonify
+import random
+
+app = Flask(__name__)
+
+@app.route('/random', methods=['GET'])
+def random_number():
+    number = random.randint(5, 10)
+    return jsonify({'number': number})
+
+if __name__ == '__main__':
+    app.run(debug=True)
