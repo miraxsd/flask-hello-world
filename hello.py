@@ -68,5 +68,20 @@ def get_news_headlines(country):
     else:
         return jsonify({'error': 'Country not found or API error'}), 404
 
+@app.route('/random-joke', methods=['GET'])
+def get_random_joke():
+    url = 'https://official-joke-api.appspot.com/random_joke'
+    response = requests.get(url)
+    data = response.json()
+
+    if response.status_code == 200:
+        joke_info = {
+            'setup': data['setup'],
+            'punchline': data['punchline']
+        }
+        return jsonify(joke_info), 200
+    else:
+        return jsonify({'error': 'Failed to retrieve joke'}), 500
+
 if __name__ == '__main__':
     app.run(debug=True, threaded=True)
