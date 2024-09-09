@@ -68,5 +68,14 @@ def get_news_headlines(country):
     else:
         return jsonify({'error': 'Country not found or API error'}), 404
 
+@app.route('/api/lunativ', methods=['GET'])
+def get_lunativ_info():
+    # Placeholder for lunativ data
+    lunativ_data = {
+        'info': 'This is the lunativ endpoint!',
+        'status': 'success'
+    }
+    return jsonify(lunativ_data), 200
+
 if __name__ == '__main__':
     app.run(debug=True, threaded=True)
