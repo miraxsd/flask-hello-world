@@ -49,5 +49,15 @@ class TestPrayerTimesEndpoint(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
         self.assertIn('error', response.json)
 
+    def test_get_lunativ_endpoint(self):
+        response = self.client.get('/api/lunativ')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('data', response.json)
+
+    def test_get_lunativ_invalid_parameters(self):
+        response = self.client.get('/api/lunativ?invalid_param=value')
+        self.assertEqual(response.status_code, 400)
+        self.assertIn('error', response.json)
+
 if __name__ == '__main__':
     unittest.main()
