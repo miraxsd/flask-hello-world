@@ -68,5 +68,17 @@ def get_news_headlines(country):
     else:
         return jsonify({'error': 'Country not found or API error'}), 404
 
+@app.route('/api/quote-of-the-day', methods=['GET'])
+def get_quote_of_the_day():
+    quotes = [
+        "The only way to do great work is to love what you do. - Steve Jobs",
+        "Life is what happens when you're busy making other plans. - John Lennon",
+        "To be yourself in a world that is constantly trying to make you something else is the greatest accomplishment. - Ralph Waldo Emerson",
+        "In the end, we will remember not the words of our enemies, but the silence of our friends. - Martin Luther King Jr.",
+        "The future belongs to those who believe in the beauty of their dreams. - Eleanor Roosevelt"
+    ]
+    quote = random.choice(quotes)
+    return jsonify({'quote': quote}), 200
+
 if __name__ == '__main__':
     app.run(debug=True, threaded=True)
