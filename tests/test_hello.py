@@ -35,5 +35,10 @@ class WeatherTestCase(unittest.TestCase):
         self.assertIn('headlines', response.json)
         self.assertIsInstance(response.json['headlines'], list)
 
+    def test_make_people_happy(self):
+        response = self.client.get('/make_people_happy')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data, b'You are amazing! Keep smiling!')
+
 if __name__ == '__main__':
     unittest.main()
