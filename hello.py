@@ -68,5 +68,18 @@ def get_news_headlines(country):
     else:
         return jsonify({'error': 'Country not found or API error'}), 404
 
+@app.route('/make-people-happy', methods=['GET'])
+def make_people_happy():
+    happiness_quotes = [
+        "Happiness is not something ready made. It comes from your own actions.",
+        "The most important thing is to enjoy your life – to be happy – it’s all that matters.",
+        "Happiness is a state of mind. It’s just according to the way you look at things.",
+        "Count your age by friends, not years. Count your life by smiles, not tears.",
+        "For every minute you are angry you lose sixty seconds of happiness."
+    ]
+    import random
+    quote = random.choice(happiness_quotes)
+    return jsonify({'quote': quote}), 200
+
 if __name__ == '__main__':
     app.run(debug=True, threaded=True)
