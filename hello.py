@@ -68,5 +68,16 @@ def get_news_headlines(country):
     else:
         return jsonify({'error': 'Country not found or API error'}), 404
 
+@app.route('/fun-fact', methods=['GET'])
+def get_fun_fact():
+    fun_facts = [
+        "Honey never spoils.",
+        "A group of flamingos is called a 'flamboyance.'",
+        "Bananas are berries, but strawberries aren't.",
+        "Octopuses have three hearts.",
+        "A jiffy is a real unit of time: 1/100th of a second."
+    ]
+    return jsonify({'fun_fact': random.choice(fun_facts)}), 200
+
 if __name__ == '__main__':
     app.run(debug=True, threaded=True)
