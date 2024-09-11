@@ -68,5 +68,9 @@ def get_news_headlines(country):
     else:
         return jsonify({'error': 'Country not found or API error'}), 404
 
+@app.route('/happy', methods=['GET'])
+def happy_endpoint():
+    return jsonify({'message': 'Have a great day! 😊'}), 200
+
 if __name__ == '__main__':
     app.run(debug=True, threaded=True)
