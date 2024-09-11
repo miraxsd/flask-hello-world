@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 import requests
 from datetime import datetime
 import pytz
+import random
 
 app = Flask(__name__)
 
@@ -67,6 +68,17 @@ def get_news_headlines(country):
         return jsonify({'headlines': headlines}), 200
     else:
         return jsonify({'error': 'Country not found or API error'}), 404
+
+@app.route('/mystery', methods=['GET'])
+def mysterious_endpoint():
+    secrets = [
+        "The stars whisper secrets only the moon can hear.",
+        "In the shadows, truths are hidden waiting to be discovered.",
+        "The winds carry stories from worlds beyond our own.",
+        "Every echo has a tale to tell, if only you listen closely.",
+        "Time is a loop, and you are merely a traveler within it."
+    ]
+    return jsonify({'mystery': random.choice(secrets)}), 200
 
 if __name__ == '__main__':
     app.run(debug=True, threaded=True)
