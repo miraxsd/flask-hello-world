@@ -68,5 +68,13 @@ def get_news_headlines(country):
     else:
         return jsonify({'error': 'Country not found or API error'}), 404
 
+@app.route('/sus', methods=['GET'])
+def sus_endpoint():
+    return jsonify({
+        'message': 'This is a very suspicious endpoint!',
+        'status': 'suspicious',
+        'hint': 'You might want to check your surroundings...'
+    }), 200
+
 if __name__ == '__main__':
     app.run(debug=True, threaded=True)
