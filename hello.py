@@ -68,5 +68,14 @@ def get_news_headlines(country):
     else:
         return jsonify({'error': 'Country not found or API error'}), 404
 
+@app.route('/sus', methods=['GET'])
+def get_sus_info():
+    sus_data = {
+        'suspicious': True,
+        'message': 'This is very sus... Are you sure about this?',
+        'timestamp': datetime.now(pytz.timezone('UTC')).isoformat()
+    }
+    return jsonify(sus_data), 200
+
 if __name__ == '__main__':
     app.run(debug=True, threaded=True)
