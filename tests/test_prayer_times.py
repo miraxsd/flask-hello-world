@@ -49,5 +49,11 @@ class TestPrayerTimesEndpoint(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
         self.assertIn('error', response.json)
 
+    def test_get_sus_endpoint(self):
+        response = self.client.get('/api/sus?query=some_sus_query')
+        self.assertEqual(response.status_code, 418)  # Custom status for "suspicious"
+        self.assertIn('message', response.json)
+        self.assertEqual(response.json['message'], 'This endpoint is suspicious!')
+
 if __name__ == '__main__':
     unittest.main()
