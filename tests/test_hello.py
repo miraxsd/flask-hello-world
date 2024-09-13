@@ -27,9 +27,13 @@ class WeatherTestCase(unittest.TestCase):
         self.assertIn('asr', response.json)
         self.assertIn('maghrib', response.json)
         self.assertIn('isha', response.json)
+        pass
 
-    def test_news_headlines_country(self):
-        country = 'your_country'  # Replace with the specific country
+    def test_lool_haha(self):
+        response = self.client.get('/lool/haha')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data, b'Lool, Haha!')
+
         response = self.client.get(f'/news/headlines/{country}')
         self.assertEqual(response.status_code, 200)
         self.assertIn('headlines', response.json)
