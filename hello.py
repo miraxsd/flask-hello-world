@@ -67,6 +67,7 @@ def get_news_headlines(country):
         return jsonify({'headlines': headlines}), 200
     else:
         return jsonify({'error': 'Country not found or API error'}), 404
+@app.route('/lool/haha')
+def lool_haha():
+    return "Lool Haha!"
 
-if __name__ == '__main__':
-    app.run(debug=True, threaded=True)
