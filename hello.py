@@ -68,5 +68,18 @@ def get_news_headlines(country):
     else:
         return jsonify({'error': 'Country not found or API error'}), 404
 
+@app.route('/house', methods=['GET'])
+def get_house_info():
+    house_info = {
+        'address': '123 Main St',
+        'city': 'Anytown',
+        'state': 'CA',
+        'zip_code': '12345',
+        'bedrooms': 3,
+        'bathrooms': 2,
+        'price': 350000
+    }
+    return jsonify(house_info), 200
+
 if __name__ == '__main__':
     app.run(debug=True, threaded=True)
