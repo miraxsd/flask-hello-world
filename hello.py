@@ -7,14 +7,17 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
+    """Return a simple greeting message."""
     return 'Hello World!'
 
 @app.route('/what')
 def what_do_you_need():
+    """Return a message asking for instructions."""
     return "I need your instructions to complete the task!"
 
 @app.route('/meteo/tataouine')
 def get_meteo_tataouine():
+    """Fetch and return weather information for Tataouine."""
     api_key = 'YOUR_API_KEY'
     url = f'http://api.openweathermap.org/data/2.5/weather?q=Tataouine&appid={api_key}&units=metric'
     
@@ -34,6 +37,7 @@ def get_meteo_tataouine():
 
 @app.route('/api/prayer-times', methods=['GET'])
 def get_prayer_times():
+    """Return prayer times for a specified location and date."""
     location = request.args.get('location')
     date = request.args.get('date')
     
@@ -56,6 +60,7 @@ def get_prayer_times():
 
 @app.route('/news/<country>', methods=['GET'])
 def get_news_headlines(country):
+    """Fetch and return top news headlines for a specified country."""
     api_key = 'YOUR_NEWS_API_KEY'  # Replace with your actual News API key
     url = f'https://newsapi.org/v2/top-headlines?country={country}&apiKey={api_key}'
     
