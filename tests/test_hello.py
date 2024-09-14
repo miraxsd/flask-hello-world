@@ -1,18 +1,23 @@
 import unittest
-from hello import app  # Updated import to match the file name
+from your_flask_app import create_app
 
 class WeatherTestCase(unittest.TestCase):
+    """Unit tests for the weather-related endpoints in the Flask application."""
+
     def setUp(self):
-        self.app = app  # Updated to use the app directly
+        """Set up the test client before each test."""
+        self.app = create_app()
         self.app.config['TESTING'] = True
         self.client = self.app.test_client()
 
     def test_hello(self):
-        response = self.client.get('/')
+        """Test the /hello endpoint to ensure it returns a greeting."""
+        response = self.client.get('/hello')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.data, b'Hello World!')  # Updated expected response
+        self.assertEqual(response.data, b'Hello, World!')
 
     def test_meteo_tataouine(self):
+        """Test the /meteo/tataouine endpoint to check for weather data."""
         response = self.client.get('/meteo/tataouine')
         self.assertEqual(response.status_code, 200)
         self.assertIn('temperature', response.json)
@@ -20,17 +25,19 @@ class WeatherTestCase(unittest.TestCase):
         self.assertIn('description', response.json)
 
     def test_prayer_times_tataouine(self):
-        response = self.client.get('/api/prayer-times?location=tataouine')  # Updated endpoint
+        """Test the /prayer_times/tataouine endpoint to verify prayer times."""
+        response = self.client.get('/prayer_times/tataouine')
         self.assertEqual(response.status_code, 200)
-        self.assertIn('Fajr', response.json['prayer_times'])  # Updated keys to match the response
-        self.assertIn('Dhuhr', response.json['prayer_times'])
-        self.assertIn('Asr', response.json['prayer_times'])
-        self.assertIn('Maghrib', response.json['prayer_times'])
-        self.assertIn('Isha', response.json['prayer_times'])
+        self.assertIn('fajr', response.json)
+        self.assertIn('dhuhr', response.json)
+        self.assertIn('asr', response.json)
+        self.assertIn('maghrib', response.json)
+        self.assertIn('isha', response.json)
 
     def test_news_headlines_country(self):
+        """Test the /news/headlines/{country} endpoint to ensure it returns news headlines."""
         country = 'your_country'  # Replace with the specific country
-        response = self.client.get(f'/news/{country}')  # Updated endpoint
+        response = self.client.get(f'/news/headlines/{country}')
         self.assertEqual(response.status_code, 200)
         self.assertIn('headlines', response.json)
         self.assertIsInstance(response.json['headlines'], list)
