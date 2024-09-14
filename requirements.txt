@@ -5,3 +5,6 @@ Werkzeug==2.0.2
 itsdangerous==2.0.1
 requests==2.26.0
 pytz==2021.3
+# This file lists the dependencies required for the Flask application.
+# Each line specifies a package and its version.
+# Ensure to install these packages using pip to run the application successfully.
