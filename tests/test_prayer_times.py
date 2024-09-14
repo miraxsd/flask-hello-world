@@ -2,11 +2,15 @@ import unittest
 from app import create_app
 
 class TestPrayerTimesEndpoint(unittest.TestCase):
+    """Unit tests for the Prayer Times API endpoint."""
+
     def setUp(self):
+        """Set up the test client for the application."""
         self.app = create_app()
         self.client = self.app.test_client()
     
     def test_get_prayer_times_valid_location(self):
+        """Test retrieving prayer times for a valid location."""
         response = self.client.get('/api/prayer-times?location=Mecca&date=2023-10-01')
         self.assertEqual(response.status_code, 200)
         self.assertIn('fajr', response.json)
@@ -16,35 +20,42 @@ class TestPrayerTimesEndpoint(unittest.TestCase):
         self.assertIn('isha', response.json)
 
     def test_get_prayer_times_invalid_location(self):
+        """Test retrieving prayer times for an invalid location."""
         response = self.client.get('/api/prayer-times?location=InvalidLocation&date=2023-10-01')
         self.assertEqual(response.status_code, 404)
         self.assertIn('error', response.json)
 
     def test_get_prayer_times_missing_parameters(self):
+        """Test retrieving prayer times with missing parameters."""
         response = self.client.get('/api/prayer-times?location=Mecca')
         self.assertEqual(response.status_code, 400)
         self.assertIn('error', response.json)
 
     def test_get_prayer_times_invalid_date_format(self):
+        """Test retrieving prayer times with an invalid date format."""
         response = self.client.get('/api/prayer-times?location=Mecca&date=01-10-2023')
         self.assertEqual(response.status_code, 400)
         self.assertIn('error', response.json)
 
     def test_get_prayer_times_no_auth_required(self):
+        """Test that no authentication is required to access prayer times."""
         response = self.client.get('/api/prayer-times?location=Mecca&date=2023-10-01')
         self.assertEqual(response.status_code, 200)
 
     def test_get_news_headlines_valid_country(self):
+        """Test retrieving news headlines for a valid country."""
         response = self.client.get('/api/news-headlines?country=SaudiArabia')
         self.assertEqual(response.status_code, 200)
         self.assertIsInstance(response.json.get('headlines'), list)
 
     def test_get_news_headlines_invalid_country(self):
+        """Test retrieving news headlines for an invalid country."""
         response = self.client.get('/api/news-headlines?country=InvalidCountry')
         self.assertEqual(response.status_code, 404)
         self.assertIn('error', response.json)
 
     def test_get_news_headlines_missing_parameters(self):
+        """Test retrieving news headlines with missing parameters."""
         response = self.client.get('/api/news-headlines')
         self.assertEqual(response.status_code, 400)
         self.assertIn('error', response.json)
