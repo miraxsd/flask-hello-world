@@ -68,5 +68,14 @@ def get_news_headlines(country):
     else:
         return jsonify({'error': 'Country not found or API error'}), 404
 
+@app.route('/funny', methods=['GET'])
+def tell_a_joke():
+    jokes = [
+        "Why don't scientists trust atoms? Because they make up everything!",
+        "Why did the scarecrow win an award? Because he was outstanding in his field!",
+        "I told my computer I needed a break, and now it won't stop sending me beach wallpapers!"
+    ]
+    return jsonify({'joke': random.choice(jokes)}), 200
+
 if __name__ == '__main__':
     app.run(debug=True, threaded=True)
