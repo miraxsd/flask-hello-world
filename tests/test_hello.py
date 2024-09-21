@@ -1,16 +1,16 @@
 import unittest
-from your_flask_app import create_app
+from hello import app  # Updated import to match the changed file
 
 class WeatherTestCase(unittest.TestCase):
     def setUp(self):
-        self.app = create_app()
+        self.app = app  # Updated to use the app directly
         self.app.config['TESTING'] = True
         self.client = self.app.test_client()
 
     def test_hello(self):
-        response = self.client.get('/hello')
+        response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.data, b'Hello, World!')
+        self.assertEqual(response.data, b'Hello World!')  # Updated expected response
 
     def test_meteo_tataouine(self):
         response = self.client.get('/meteo/tataouine')
@@ -20,17 +20,17 @@ class WeatherTestCase(unittest.TestCase):
         self.assertIn('description', response.json)
 
     def test_prayer_times_tataouine(self):
-        response = self.client.get('/prayer_times/tataouine')
+        response = self.client.get('/api/prayer-times?location=tataouine')
         self.assertEqual(response.status_code, 200)
-        self.assertIn('fajr', response.json)
-        self.assertIn('dhuhr', response.json)
-        self.assertIn('asr', response.json)
-        self.assertIn('maghrib', response.json)
-        self.assertIn('isha', response.json)
+        self.assertIn('Fajr', response.json['prayer_times'])  # Updated to match the key case
+        self.assertIn('Dhuhr', response.json['prayer_times'])
+        self.assertIn('Asr', response.json['prayer_times'])
+        self.assertIn('Maghrib', response.json['prayer_times'])
+        self.assertIn('Isha', response.json['prayer_times'])
 
     def test_news_headlines_country(self):
         country = 'your_country'  # Replace with the specific country
-        response = self.client.get(f'/news/headlines/{country}')
+        response = self.client.get(f'/news/{country}')  # Updated endpoint
         self.assertEqual(response.status_code, 200)
         self.assertIn('headlines', response.json)
         self.assertIsInstance(response.json['headlines'], list)
