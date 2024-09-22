@@ -12,6 +12,11 @@ class WeatherTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data, b'Hello, World!')
 
+    def test_funny(self):
+        response = self.client.get('/funny')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data, b'Why did the scarecrow win an award? Because he was outstanding in his field!')
+
     def test_meteo_tataouine(self):
         response = self.client.get('/meteo/tataouine')
         self.assertEqual(response.status_code, 200)
