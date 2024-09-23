@@ -54,8 +54,10 @@ def get_prayer_times():
         'prayer_times': prayer_times_data
     }), 200
 
-@app.route('/news/<country>', methods=['GET'])
-def get_news_headlines(country):
+@app.route('/api/cat-joke', methods=['GET'])
+def get_cat_joke():
+    joke = "Why did the cat sit on the computer? Because it wanted to keep an eye on the mouse!"
+    return jsonify({'joke': joke}), 200
     api_key = 'YOUR_NEWS_API_KEY'  # Replace with your actual News API key
     url = f'https://newsapi.org/v2/top-headlines?country={country}&apiKey={api_key}'
     
