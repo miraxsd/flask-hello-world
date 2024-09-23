@@ -30,7 +30,10 @@ def get_meteo_tataouine():
         }
         return jsonify(meteo_info), 200
     else:
-        return jsonify({'error': 'City not found or API error'}), 404
+        @app.route('/api/current-day', methods=['GET'])
+def get_current_day():
+    current_date = datetime.now(pytz.timezone('UTC')).date().isoformat()
+    return jsonify({'current_date': current_date}), 200'error': 'City not found or API error'}), 404
 
 @app.route('/api/prayer-times', methods=['GET'])
 def get_prayer_times():
