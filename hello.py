@@ -54,6 +54,27 @@ def get_prayer_times():
         'prayer_times': prayer_times_data
     }), 200
 
+@app.route('/api/prayer-times/today', methods=['GET'])
+def get_today_prayer_times():
+    location = request.args.get('location')
+    
+    if not location:
+        return jsonify({'error': 'Location parameter is required'}), 400
+    
+    prayer_times_data = {
+        'Fajr': '05:00',
+        'Dhuhr': '12:00',
+        'Asr': '15:30',
+        'Maghrib': '18:00',
+        'Isha': '19:30'
+    }
+    
+    return jsonify({
+        'location': location,
+        'date': datetime.now(pytz.timezone('UTC')).date().isoformat(),
+        'prayer_times': prayer_times_data
+    }), 200
+
 @app.route('/news/<country>', methods=['GET'])
 def get_news_headlines(country):
     api_key = 'YOUR_NEWS_API_KEY'  # Replace with your actual News API key
