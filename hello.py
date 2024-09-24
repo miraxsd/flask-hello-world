@@ -13,10 +13,10 @@ def hello_world():
 def what_do_you_need():
     return "I need your instructions to complete the task!"
 
-@app.route('/meteo/tataouine')
-def get_meteo_tataouine():
+@app.route('/api/weather/<country>', methods=['GET'])
+def get_weather_by_country(country):
     api_key = 'YOUR_API_KEY'
-    url = f'http://api.openweathermap.org/data/2.5/weather?q=Tataouine&appid={api_key}&units=metric'
+    url = f'http://api.openweathermap.org/data/2.5/weather?q={country}&appid={api_key}&units=metric'
     
     response = requests.get(url)
     data = response.json()
@@ -30,7 +30,7 @@ def get_meteo_tataouine():
         }
         return jsonify(meteo_info), 200
     else:
-        return jsonify({'error': 'City not found or API error'}), 404
+        return jsonify({'error': 'Country not found or API error'}), 404
 
 @app.route('/api/prayer-times', methods=['GET'])
 def get_prayer_times():
