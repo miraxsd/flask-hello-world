@@ -16,5 +16,17 @@ def random_quote():
     selected_quote = random.choice(quotes)
     return jsonify({"quote": selected_quote})
 
-if __name__ == '__main__':
-    app.run(debug=True)
+@app.route('/api/v1/noob_welcome', methods=['GET'])
+def noob_welcome():
+    return jsonify({"message": "Welcome to our API! We're glad to have you here."})
+
+@app.route('/api/v1/noob_tips', methods=['GET'])
+def noob_tips():
+    tips = [
+        "Start with the fundamentals: Understand the basics of programming languages and computer science concepts.",
+        "Practice, practice, practice: Build small projects to apply what you've learned.",
+        "Read code written by others: It will help you understand different styles and approaches.",
+        "Don't hesitate to ask for help: Join communities and forums.",
+        "Keep learning: Technology changes rapidly, stay updated with new tools and techniques."
+    ]
+    return jsonify({"tips": tips})
