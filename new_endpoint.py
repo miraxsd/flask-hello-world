@@ -16,5 +16,23 @@ def random_quote():
     selected_quote = random.choice(quotes)
     return jsonify({"quote": selected_quote})
 
+@app.route('/api/v1/population/<country>', methods=['GET'])
+def population(country):
+    populations = {
+        "USA": 331002651,
+        "Canada": 37742154,
+        "UK": 67886011,
+        "Germany": 83783942,
+        "France": 65273511,
+        "India": 1380004385,
+        "China": 1439323776
+    }
+    
+    country_population = populations.get(country)
+    if country_population:
+        return jsonify({"country": country, "population": country_population})
+    else:
+        return jsonify({"error": "Country not found"}), 404
+
 if __name__ == '__main__':
     app.run(debug=True)
