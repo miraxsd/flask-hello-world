@@ -1,4 +1,7 @@
 from flask import Flask, jsonify, request
+import pytz
+from datetime import datetime
+import logging, request
 import random
 
 app = Flask(__name__)
@@ -15,6 +18,26 @@ def random_quote():
     
     selected_quote = random.choice(quotes)
     return jsonify({"quote": selected_quote})
+
+@app.route('/api/v1/current_hour', methods=['GET'])
+def current_hour():
+    country = request.args.get('country')
+    return get_current_hour(country)
+
+@app.route('/api/v1/current_hour', methods=['GET'])
+def current_hour():
+    country = request.args.get('country')
+    if not validate_country_code(country):
+        logging.error(f'Invalid country code: {country}')
+        return create_error_response('Invalid country code', 400)
+    
+    try:
+        timezone = pytz.timezone(country)
+        current_time = datetime.now(timezone)
+        return jsonify({"current_hour": current_time.strftime('%H:%M')})
+    except Exception as e:
+        logging.error(f'Error retrieving time for country code {country}: {str(e)}')
+        return create_error_response('Error retrieving time', 500)
 
 if __name__ == '__main__':
     app.run(debug=True)
