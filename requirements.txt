@@ -1,5 +1,32 @@
-Flask==0.10.1
-Jinja2==2.7.2
-MarkupSafe==0.23
-Werkzeug==0.9.4
-itsdangerous==0.24
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/hello_simple')
+def hello_simple():
+    """Return a simple greeting."""
+    try:
+        return "Hello, I'm simple!"
+    except Exception as e:
+        app.logger.error(f"Error occurred: {e}")
+        return "An error occurred while processing your request.", 500
+
+if __name__ == '__main__':
+    app.run(debug=True)
+```
+
+```python
+import unittest
+from hello import app
+
+class HelloSimpleTestCase(unittest.TestCase):
+    def setUp(self):
+        self.app = app.test_client()
+
+    def test_hello_simple(self):
+        response = self.app.get('/hello_simple')
+        self.assertEqual(response.data.decode(), "Hello, I'm simple!")
+        self.assertEqual(response.status_code, 200)
+
+if __name__ == '__main__':
+    unittest.main()
