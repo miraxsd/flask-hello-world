@@ -1,5 +1,22 @@
-Flask==0.10.1
-Jinja2==2.7.2
-MarkupSafe==0.23
-Werkzeug==0.9.4
-itsdangerous==0.24
+Flask==2.0.3
+Jinja2==3.0.3
+MarkupSafe==2.0.1
+Werkzeug==2.0.3
+itsdangerous==2.0.1
+```
+
+```python
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+@app.route('/convert', methods=['GET'])
+def convert():
+    celsius = request.args.get('celsius', type=float)
+    if celsius is None:
+        return jsonify({'error': 'Please provide a Celsius value.'}), 400
+    fahrenheit = (celsius * 9/5) + 32
+    return jsonify({'celsius': celsius, 'fahrenheit': fahrenheit})
+
+if __name__ == '__main__':
+    app.run(debug=True)
