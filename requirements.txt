@@ -3,3 +3,25 @@ Jinja2==2.7.2
 MarkupSafe==0.23
 Werkzeug==0.9.4
 itsdangerous==0.24
+num2words==0.5.10
+```
+
+```python
+from flask import Flask, request, jsonify
+from num2words import num2words
+
+app = Flask(__name__)
+
+@app.route('/convert', methods=['GET'])
+def convert_number():
+    number = request.args.get('number', type=int)
+    if number is None:
+        return jsonify({'error': 'No number provided'}), 400
+    try:
+        text = num2words(number)
+        return jsonify({'number': number, 'text': text})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+if __name__ == '__main__':
+    app.run(debug=True)
