@@ -1,0 +1,85 @@
+**README.md**
+```markdown
+# Laugh API
+
+This project provides a simple API endpoint that returns a random joke to make you laugh.
+
+## Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/laugh-api.git
+   cd laugh-api
+   ```
+
+2. Install the required packages:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+## Usage
+
+To run the application, execute:
+```bash
+python hello.py
+```
+
+The API will be available at `http://127.0.0.1:5000/laugh`.
+
+## Testing
+
+To run the tests, execute:
+```bash
+pytest test_hello.py
+```
+
+## License
+
+This project is licensed under the MIT License.
+```
+
+**hello.py**
+```python
+from flask import Flask, jsonify
+import random
+
+app = Flask(__name__)
+
+jokes = [
+    "Why don't scientists trust atoms? Because they make up everything!",
+    "Why did the scarecrow win an award? Because he was outstanding in his field!",
+    "I told my wife she was drawing her eyebrows too high. She looked surprised!",
+    "Why don't programmers like nature? It has too many bugs."
+]
+
+@app.route('/laugh', methods=['GET'])
+def laugh():
+    return jsonify({'joke': random.choice(jokes)})
+
+if __name__ == '__main__':
+    app.run(debug=True)
+```
+
+**requirements.txt**
+```
+Flask==2.2.2
+pytest==7.1.2
+```
+
+**test_hello.py**
+```python
+import pytest
+from hello import app
+
+@pytest.fixture
+def client():
+    app.config['TESTING'] = True
+    with app.test_client() as client:
+        yield client
+
+def test_laugh_endpoint(client):
+    response = client.get('/laugh')
+    assert response.status_code == 200
+    json_data = response.get_json()
+    assert 'joke' in json_data
+    assert isinstance(json_data['joke'], str)
