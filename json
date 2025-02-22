@@ -1,0 +1,39 @@
+{
+  "endpoint": "/laugh",
+  "method": "GET",
+  "description": "Returns a random joke to make you laugh.",
+  "response": {
+    "joke": "Why don't scientists trust atoms? Because they make up everything!"
+  },
+  "tests": [
+    {
+      "description": "Test if the /laugh endpoint returns a 200 status code",
+      "expected": 200,
+      "actual": "response.statusCode"
+    },
+    {
+      "description": "Test if the /laugh endpoint returns a joke in the response",
+      "expected": "string",
+      "actual": "typeof response.body.joke"
+    }
+  ],
+  "readme": {
+    "title": "Laugh API",
+    "description": "A simple API that provides a random joke to make you laugh.",
+    "usage": [
+      {
+        "method": "GET",
+        "endpoint": "/laugh",
+        "response": {
+          "joke": "A random joke string"
+        }
+      }
+    ],
+    "tests": [
+      "Ensure the /laugh endpoint returns a 200 status code.",
+      "Ensure the /laugh endpoint returns a joke in the response."
+    ],
+    "installation": "Clone the repository and run `npm install` to install dependencies.",
+    "license": "MIT"
+  }
+}
