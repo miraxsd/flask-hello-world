@@ -1,0 +1,33 @@
+{
+  "endpoint": "/laugh",
+  "method": "GET",
+  "description": "Returns a random joke to make you laugh.",
+  "response": {
+    "joke": "Why don't scientists trust atoms? Because they make up everything!"
+  },
+  "tests": [
+    {
+      "test_case": "Get a random joke",
+      "expected_status": 200,
+      "expected_response": {
+        "joke": "string"
+      }
+    },
+    {
+      "test_case": "Check if joke is not empty",
+      "expected_status": 200,
+      "expected_response": {
+        "joke": "not empty"
+      }
+    }
+  ],
+  "readme": {
+    "title": "Laugh API",
+    "description": "A simple API that provides random jokes to make you laugh.",
+    "usage": "Send a GET request to /laugh to receive a random joke.",
+    "example_request": "GET /laugh",
+    "example_response": {
+      "joke": "Why did the scarecrow win an award? Because he was outstanding in his field!"
+    }
+  }
+}
