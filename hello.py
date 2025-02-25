@@ -2,6 +2,7 @@
 
 from flask import Flask, jsonify
 import random
+import logging
 
 app = Flask(__name__)
 
@@ -19,7 +20,7 @@ def make_me_laugh() -> str:
     """Return a random joke to make you laugh.
 
     Returns:
-        str: A random joke.
+        str: A random joke in JSON format.
 
     Raises:
         Exception: If there is an issue retrieving a joke.
@@ -31,10 +32,14 @@ def make_me_laugh() -> str:
         "Why don't skeletons fight each other? They don't have the guts!"
     ]
 
+    if not jokes:
+        return jsonify({"success": False, "message": "No jokes available."})
+
     try:
-        return random.choice(jokes)
+        return jsonify(random.choice(jokes))
     except Exception as e:
-        return f"An error occurred: {str(e)}"
+        logging.error(f"An error occurred: {str(e)}")
+        return jsonify({"success": False, "message": str(e)})
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
